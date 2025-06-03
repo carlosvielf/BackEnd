@@ -1,0 +1,19 @@
+{
+  "name": "backend-kadu",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsx --watch index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mysql2": "^3.14.1",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.4"
+  }
+}
