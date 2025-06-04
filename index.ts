@@ -1,6 +1,7 @@
 import express from 'express';
 import { connect } from './bd'
 import { Connection } from 'mysql2/promise';
+import { UsuarioRepository } from './repository/usuario.repository';
 
 const app = express();
 const port = 3000;
@@ -12,15 +13,16 @@ connect()
 
 function api(db: Connection) {
 
+  const usuarioRepository = new UsuarioRepository(db)
+
   app.post('/user', async (req, res) => {
-    const user = req.body as IUsuarios;
+    const usuario = await usuarioRepository.create(req.body as IUsuario)
+    res.status(201).json(usuario);
+  });
 
-    const query = `INSERT INTO usuarios(nome, email, senha) VALUES (?, ?, ?)`
-    const values = [user.nome, user.email, user.senha];
-    const users = await db.query(query, values)
-    console.log(users)
-
-    res.status(201).json({ mensagem: 'Usuário criado!', usuario: user });
+    app.get('/user', async (req, res) => {
+    const users = await usuarioRepository.getAll()
+    res.status(200).json({users});
   });
 
   app.listen(port, () => {
